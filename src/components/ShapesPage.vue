@@ -25,10 +25,12 @@
       </b-col>
       <b-col v-if="trained && !addingShape">
         <Chalkboard ref="canvasTest"/>
-        <b-button @click="predict" variant="success">Check</b-button>
-        <b-button @click="clear" variant="link">Clear</b-button>
-        <h2>Results</h2>
-        <h1>{{prediction}}</h1>
+        <div>
+          <b-button @click="predict" variant="success">Check</b-button>
+          <b-button @click="clear" variant="link">Clear</b-button>
+          <h2>Results</h2>
+          <h1>{{prediction}}</h1>
+        </div>
       </b-col>
     </b-row>
   </b-container>
@@ -61,6 +63,8 @@ export default {
       this.net = new brain.NeuralNetwork()
       this.training = true
       this.trained = false
+      this.trainingResults = null
+      this.prediction = null
       this.trainingResults = await this.net.trainAsync(data, { log: true })
       this.training = false
       this.trained = true
