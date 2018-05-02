@@ -14,7 +14,6 @@
       <b-col>
         <b-alert :show="training">Training ...</b-alert>
         <div v-if="!training">
-          <!-- <b-form-input v-model="iterations" type="number"></b-form-input> -->
           <b-button @click="train" variant="primary">Train</b-button>
           <p>Training error: {{trainingError}}</p>
           <p>Training iterations: {{trainingIterations}}</p>
@@ -46,7 +45,6 @@ export default {
     training: false,
     trainingError: null,
     trainingIterations: null,
-    iterations: 10,
     net: null,
     prediction: null
   }),
@@ -58,7 +56,6 @@ export default {
       if (!this.net) {
         this.net = new brain.NeuralNetwork()
       }
-
       this.trainingError = null
       this.trainingIterations = null
       this.training = true
