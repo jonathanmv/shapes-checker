@@ -2,6 +2,8 @@
 
 > Test shapes knowledge from kids
 
+See it in action at https://jonathanmv.github.io/shapes-checker/#/
+
 ## Build Setup
 
 ``` bash
