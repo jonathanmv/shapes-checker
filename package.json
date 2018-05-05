@@ -1,7 +1,7 @@
 {
   "name": "shapes-checker",
   "version": "1.0.0",
-  "description": "Test shapes knowledge from kids",
+  "description": "Train the computer in shapes and then test its knowledge",
   "author": "Jonathan Morales Vélez <jonathanmv@outlook.com>",
   "private": true,
   "scripts": {
@@ -10,7 +10,12 @@
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
     "sync": "aws s3 sync dist/ s3://autenti.ca/shapes-checker/",
-    "deploy": "npm run build && npm run sync"
+    "deploy": "npm run build && npm run sync && npm run deploy-gh-pages",
+    "deploy-gh-pages": "node build/gh-pages-deploy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonathanmv/shapes-checker.git"
   },
   "dependencies": {
     "bootstrap-vue": "2.0.0-rc.9",
@@ -45,6 +50,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "gh-pages": "1.1.0",
     "html-webpack-plugin": "^2.30.1",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
