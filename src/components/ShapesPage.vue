@@ -2,6 +2,11 @@
   <b-container>
     <b-row>
       <b-col>
+        <LoadModel @model="modelLoaded" />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <h1>Known shapes</h1>
         <ul>
           <li :key="name" v-for="name in shapeNames">
@@ -18,6 +23,9 @@
         <div v-if="trained">
           <p>Training error: {{trainingResults.error}}</p>
           <p>Training iterations: {{trainingResults.iterations}}</p>
+          <b-button @click="download" variant="info">
+            Download
+          </b-button>
         </div>
       </b-col>
       <b-col v-if="addingShape">
@@ -39,11 +47,14 @@
 <script>
 import brain from 'brain.js'
 import AddShape from '@/components/AddShape'
+import LoadModel from '@/components/LoadModelFromUrl'
 import Chalkboard from '@/components/Chalkboard'
+import download from '@/helpers/download'
+import Shape from '@/classes/Shape'
 
 export default {
   name: 'ShapesPage',
-  components: { AddShape, Chalkboard },
+  components: { AddShape, Chalkboard, LoadModel },
   data: () => ({
     addingShape: false,
     shapes: [],
@@ -75,6 +86,22 @@ export default {
     },
     clear () {
       this.$refs.canvasTest.clear()
+      this.prediction = null
+    },
+    download () {
+      const model = this.net.toJSON()
+      const shapes = this.shapeNames
+      const json = { model, shapes }
+      download(JSON.stringify(json), 'model.json', 'text/json')
+    },
+    modelLoaded (data) {
+      const { model, shapes } = data
+      this.net = this.net || new brain.NeuralNetwork()
+      this.net.fromJSON(model)
+      this.shapes = shapes.map(name => new Shape({ name, data: [1] }))
+      this.training = false
+      this.trained = true
+      this.trainingResults = {}
       this.prediction = null
     }
   },
