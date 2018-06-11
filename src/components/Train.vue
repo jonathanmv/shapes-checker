@@ -28,7 +28,8 @@ import Chalkboard from '@/components/Chalkboard'
 export default {
   name: 'Train',
   props: {
-    shape: { required: true }
+    shape: { required: true },
+    resolution: { type: Number, default: 20 }
   },
   components: { Chalkboard },
   data: () => ({
@@ -41,7 +42,7 @@ export default {
   },
   methods: {
     getVectors () {
-      return this.boards.map(board => board.getImageVector())
+      return this.boards.map(board => board.getImageVector(this.resolution))
     },
     train () {
       const vectors = this.getVectors()

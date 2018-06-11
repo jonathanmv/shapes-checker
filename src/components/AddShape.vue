@@ -10,7 +10,7 @@
                     placeholder="circle">
       </b-form-input>
     </b-form-group>
-    <Train @trained="shape.data = $event" :shape="shape.name" />
+    <Train @trained="shape.data = $event" :shape="shape.name" :resolution="resolution"/>
     <b-button type="submit" variant="primary">Add shape</b-button>
   </b-form>
 </template>
@@ -22,6 +22,9 @@ import Shape from '@/classes/Shape'
 export default {
   name: 'AddShape',
   components: { Train },
+  props: {
+    resolution: { type: Number, default: 20 }
+  },
   data: () => ({
     shape: {
       name: null,

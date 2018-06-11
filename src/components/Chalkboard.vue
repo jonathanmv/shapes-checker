@@ -13,7 +13,8 @@ export default {
   props: {
     penColor: {
       // default: '#f4f4f0'
-      default: '#000'
+      // default: '#000'
+      default: '#404047'
     },
     backgroundColor: {
       // default: '#404047'
@@ -24,9 +25,8 @@ export default {
     pad: null
   }),
   methods: {
-    getImageVector () {
+    getImageVector (columns = 20) {
       const canvas = this.$refs.canvas
-      const columns = 20
       return getVectorFromCanvas({ canvas, columns })
     },
     clear () {
@@ -46,7 +46,7 @@ export default {
     const { penColor } = this
     const props = { penColor }
     this.pad = new SignaturePad(canvas, props)
-    this.resizeCanvas()
+    // this.resizeCanvas()
   }
 }
 </script>

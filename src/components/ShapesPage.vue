@@ -29,7 +29,7 @@
         </div>
       </b-col>
       <b-col v-if="addingShape">
-        <AddShape @shape="addShape" />
+        <AddShape @shape="addShape" :resolution="resolution" />
       </b-col>
       <b-col v-if="trained && !addingShape">
         <Chalkboard ref="canvasTest"/>
@@ -62,7 +62,8 @@ export default {
     training: false,
     trainingResults: {},
     trained: false,
-    prediction: null
+    prediction: null,
+    resolution: 10
   }),
   methods: {
     addShape (shape) {
@@ -81,7 +82,7 @@ export default {
       this.trained = true
     },
     predict () {
-      const data = this.$refs.canvasTest.getImageVector()
+      const data = this.$refs.canvasTest.getImageVector(this.resolution)
       this.prediction = brain.likely(data, this.net)
     },
     clear () {
