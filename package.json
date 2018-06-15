@@ -9,8 +9,7 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "sync": "aws s3 sync dist/ s3://autenti.ca/shapes-checker/",
-    "deploy": "npm run build && npm run sync && npm run deploy-gh-pages",
+    "deploy": "npm run build && npm run deploy-gh-pages",
     "deploy-gh-pages": "node build/gh-pages-deploy.js"
   },
   "repository": {
