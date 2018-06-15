@@ -58,7 +58,7 @@ export default {
     trainingResults: {},
     trained: false,
     prediction: null,
-    resolution: 20
+    resolution: 10
   }),
   methods: {
     addShape (shape) {
