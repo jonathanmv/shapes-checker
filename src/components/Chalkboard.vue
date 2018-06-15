@@ -1,5 +1,5 @@
 <template lang="html">
-  <canvas ref="canvas" class="Chalkboard-canvas border" :style="{ 'background-color': backgroundColor }"></canvas>
+  <canvas ref="canvas" class="border" width="200" height="200" :style="{ 'background-color': backgroundColor }"></canvas>
 </template>
 
 <script>
@@ -13,12 +13,14 @@ export default {
   props: {
     penColor: {
       // default: '#f4f4f0'
-      // default: '#000'
       default: '#404047'
     },
     backgroundColor: {
       // default: '#404047'
       default: '#FFF'
+    },
+    showHits: {
+      default: false
     }
   },
   data: () => ({
@@ -27,7 +29,8 @@ export default {
   methods: {
     getImageVector (columns = 20) {
       const canvas = this.$refs.canvas
-      return getVectorFromCanvas({ canvas, columns })
+      const { showHits } = this
+      return getVectorFromCanvas({ canvas, columns, showHits })
     },
     clear () {
       this.pad.clear()
@@ -52,10 +55,4 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .Chalkboard-canvas {
-    width: 200px;
-    height: 200px;
-    /* width: 100%;
-    height: 100%; */
-  }
 </style>

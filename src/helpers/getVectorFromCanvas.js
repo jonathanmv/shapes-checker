@@ -5,7 +5,7 @@
  * 0 indicates an absence of color while 1 is the opposite
  */
 
-export default ({ canvas, columns }) => {
+export default ({ canvas, columns, showHits }) => {
   const { clientWidth, clientHeight } = canvas
   const context = canvas.getContext('2d')
   const xStep = clientWidth / columns
@@ -18,21 +18,22 @@ export default ({ canvas, columns }) => {
 
   for (let y = 0; y < clientHeight; y += yStep) {
     for (let x = 0; x < clientWidth; x += xStep) {
-      context.fillStyle = 'rgba(255, 255, 0, 0.6)'
       const sample = context.getImageData(x, y, xStep, yStep)
-      // context.strokeRect(x, y, xStep, yStep)
       const isEmpty = sample.data.find(value => value > 0) === undefined
       vector.push(isEmpty ? 0 : 1)
-      if (!isEmpty) {
+      if (!isEmpty && showHits) {
         context.fillStyle = 'rgba(0, 255, 0, 0.6)'
         context.fillRect(x, y, xStep, yStep)
       }
     }
   }
 
-  const time = (performance.now() - startTime) / 1000
-  console.log(`Vector length: ${vector.length}. Took: ${time}s`)
-  print(vector, columns)
+  if (showHits) {
+    const time = (performance.now() - startTime) / 1000
+    console.log(`Vector length: ${vector.length}. Took: ${time}s`)
+    print(vector, columns)
+  }
+
   return vector
 }
 

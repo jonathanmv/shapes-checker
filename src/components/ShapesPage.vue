@@ -2,11 +2,6 @@
   <b-container>
     <b-row>
       <b-col>
-        <LoadModel @model="modelLoaded" />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
         <h1>Known shapes</h1>
         <ul>
           <li :key="name" v-for="name in shapeNames">
@@ -63,7 +58,7 @@ export default {
     trainingResults: {},
     trained: false,
     prediction: null,
-    resolution: 10
+    resolution: 20
   }),
   methods: {
     addShape (shape) {
