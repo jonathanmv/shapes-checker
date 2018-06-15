@@ -2,15 +2,22 @@
   <b-container>
     <h1>Draw {{shape}}</h1>
     <p>Draw one {{shape}} in each board. Click the button below after finishing the drawings.</p>
+    <div>
+      <b-form-checkbox v-model="showHits"
+                       value="true"
+                       unchecked-value="false">
+        Show hits on save
+      </b-form-checkbox>
+    </div>
     <b-row>
       <b-col>
-        <Chalkboard ref="sample1" />
+        <Chalkboard :showHits="showHits" ref="sample1" />
       </b-col>
       <b-col>
-        <Chalkboard ref="sample2" />
+        <Chalkboard :showHits="showHits" ref="sample2" />
       </b-col>
       <b-col>
-        <Chalkboard ref="sample3" />
+        <Chalkboard :showHits="showHits" ref="sample3" />
       </b-col>
     </b-row>
     <b-row>
@@ -33,7 +40,8 @@ export default {
   },
   components: { Chalkboard },
   data: () => ({
-    trainData: []
+    trainData: [],
+    showHits: false
   }),
   computed: {
     boards () {
