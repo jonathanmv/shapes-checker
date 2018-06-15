@@ -1,28 +1,32 @@
 <template lang="html">
   <b-container>
-    <h1>Draw {{shape}}</h1>
-    <p>Draw one {{shape}} in each board. Click the button below after finishing the drawings.</p>
-    <div>
-      <b-form-checkbox v-model="showHits"
-                       value="true"
-                       unchecked-value="false">
-        Show hits on save
-      </b-form-checkbox>
-    </div>
     <b-row>
       <b-col>
-        <Chalkboard :showHits="showHits" ref="sample1" />
+        <h1>Draw {{shape}}</h1>
+        <p>Draw one {{shape}} in each board. Click the button below after finishing the drawings.</p>
+        <p>
+          <b-form-checkbox v-model="showHits"
+            title="Show which regions are considered an interesting point to keep track of the shape"
+            value="true"
+            unchecked-value="false">
+            Show hits on add samples
+          </b-form-checkbox>
+        </p>
       </b-col>
-      <b-col>
-        <Chalkboard :showHits="showHits" ref="sample2" />
-      </b-col>
-      <b-col>
-        <Chalkboard :showHits="showHits" ref="sample3" />
+    </b-row>
+    <b-row>
+      <b-col :key="index" v-for="index in samplesToCollect">
+        <Chalkboard :showHits="showHits" ref="boards" />
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-button @click="train" class="float-right" variant="primary">Save</b-button>
+        <p>{{numberOfSamples}} Samples added</p>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-button @click="addTrainingData" class="float-right" variant="primary">Add Samples</b-button>
         <b-button @click="clear" class="float-right" variant="link">Clear</b-button>
       </b-col>
     </b-row>
@@ -36,31 +40,32 @@ export default {
   name: 'Train',
   props: {
     shape: { required: true },
-    resolution: { type: Number, default: 20 }
+    resolution: { type: Number, default: 20 },
+    samplesToCollect: { type: Number, default: 4 }
   },
   components: { Chalkboard },
   data: () => ({
     trainData: [],
-    showHits: false
+    showHits: true
   }),
   computed: {
-    boards () {
-      return [1, 2, 3].map(i => this.$refs['sample' + i])
+    numberOfSamples () {
+      return this.trainData.length
     }
   },
   methods: {
     getVectors () {
-      return this.boards.map(board => board.getImageVector(this.resolution))
+      return this.$refs.boards.map(board => board.getImageVector(this.resolution))
     },
-    train () {
+    addTrainingData () {
       const vectors = this.getVectors()
       const output = { [this.shape]: 1 }
       const data = vectors.map(input => ({ input, output }))
       this.trainData = this.trainData.concat(data)
-      this.$emit('trained', this.trainData)
+      this.$emit('data-added', this.trainData)
     },
     clear () {
-      this.boards.forEach(board => board.clear())
+      this.$refs.boards.forEach(board => board.clear())
     }
   }
 }

@@ -10,7 +10,7 @@
                     placeholder="circle">
       </b-form-input>
     </b-form-group>
-    <Train @trained="shape.data = $event" :shape="shape.name" :resolution="resolution"/>
+    <Train @data-added="shape.data = $event" :shape="shape.name" :resolution="resolution"/>
     <b-button type="submit" variant="primary">Add shape</b-button>
   </b-form>
 </template>
